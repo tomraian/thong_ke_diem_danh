@@ -180,7 +180,7 @@ class AttendanceController extends Controller
     }
     public function api()
     {
-        return Datatables::of(Attendance::query()->where('count', '>', 0)->orderBy('student_code', 'ASC')->with('student')->get())
+        return Datatables::of(Attendance::query()->where('count', '>', 0)->with('student', 'student.class')->get())
             ->addColumn('saint_name', function ($student) {
                 return $student->student->saint_name;
             })
@@ -289,8 +289,12 @@ class AttendanceController extends Controller
 
     public function import(Request $request)
     {
-        Excel::import(new AttendancesImport, $request->file);
+        // Excel::import(new AttendancesImport, $request->file);
+        // dd($AttendancesImport->import($file));
 
+        $file = $request->file;
+        $AttendancesImport = new AttendancesImport;
+        $AttendancesImport->import($file);
         return redirect()->route('attendance.process');
     }
 }

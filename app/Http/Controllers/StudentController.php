@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
 use Yajra\Datatables\Datatables;
 use App\Helper\Helper;
+use App\Models\Classes;
 
 class StudentController extends Controller
 {
@@ -57,7 +58,7 @@ class StudentController extends Controller
     }
     public function api()
     {
-        return Datatables::of(Student::query()->orderBy('code', 'ASC')->with('class', 'AttendanceDetails'))
+        return Datatables::of(Student::query()->with('class', 'AttendanceDetails'))
             ->editColumn('class_id', function ($student) {
                 return $student->class->name;
             })
@@ -76,6 +77,11 @@ class StudentController extends Controller
                 } else {
                     return $student->AttendanceDetails->first()->count_not_sunday;
                 }
+            })
+            ->filterColumn('name', function ($query, $keyword) {
+                $query->whereHas('class', function ($q) use ($keyword) {
+                    return $q->where('name', $keyword);
+                });
             })
             ->make(true);
     }

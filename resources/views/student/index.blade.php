@@ -5,10 +5,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Thống kê điểm danh {{ $start_date }} - {{ $end_date }}</title>
-    <link rel="stylesheet" type="text/css"
-        href="https://cdn.datatables.net/v/bs5/jq-3.6.0/jszip-2.5.0/dt-1.11.5/af-2.3.7/b-2.2.2/b-colvis-2.2.2/b-html5-2.2.2/b-print-2.2.2/cr-1.5.5/date-1.1.2/fc-4.0.2/fh-3.2.2/kt-2.6.4/r-2.2.9/rg-1.1.4/rr-1.2.8/sc-2.0.5/sb-1.3.2/sp-2.0.0/sl-1.3.4/sr-1.1.0/datatables.min.css" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
+    <title data-title="Thống kê điểm danh từ ngày {{ $start_date }} - {{ $end_date }}">
+        Thống kê điểm danh từ ngày {{ $start_date }} - {{ $end_date }}
+    </title>
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/bootstrap.min.css') }}" />
+    <link rel="stylesheet" href="{{ asset('css/datatables.min.css') }}">
+    <link href="{{ asset('css/select2.min.css') }}" rel="stylesheet" />
+
     <style>
         table.dataTable tbody>tr.selected td {
             background-color: #0043c8 !important;
@@ -21,34 +24,46 @@
     @include('menu')
 
     <div class="container-fluid">
-        <form action="{{ route('student.truncate') }}" method="post">
-            @csrf
-            <button class="btn badge-success m-3">Xóa dữ liệu điểm danh</button>
-        </form>
-        <table class="table text-center" id="category-table" width="100%" border="1">
-            <thead class="thead-dark">
-                <tr>
-                    <th scope="col ">Mã số</th>
-                    <th scope="col">Tên Thánh</th>
-                    <th scope="col">Họ</th>
-                    <th scope="col">Tên</th>
-                    <th scope="col">Lớp</th>
-                    <th scope="col">Chúa Nhật</th>
-                    <th scope="col">Ngày thường</th>
-                </tr>
-            </thead>
-        </table>
+        <div class="row justify-content-center align-items-center">
+            <div class="col-6">
+                <form action="{{ route('student.truncate') }}" method="post">
+                    @csrf
+                    <button class="btn badge-success m-3">Xóa dữ liệu điểm danh</button>
+                </form>
+            </div>
+            <div class="col-6">
+                <select class="form-select form-select-lg mb-3 w-100" id="class">
+                </select>
+            </div>
+        </div>
+        <div class="row ">
+            <div class="col-12">
+                <table class="table text-center" id="category-table" width="100%" border="1">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th scope="col ">Mã số</th>
+                            <th scope="col">Tên Thánh</th>
+                            <th scope="col">Họ</th>
+                            <th scope="col">Tên</th>
+                            <th scope="col">Lớp</th>
+                            <th scope="col">Chúa Nhật</th>
+                            <th scope="col">Ngày thường</th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
     </div>
 </body>
 
 
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
-<script type="text/javascript"
-src="https://cdn.datatables.net/v/bs5/jq-3.6.0/jszip-2.5.0/dt-1.11.5/af-2.3.7/b-2.2.2/b-colvis-2.2.2/b-html5-2.2.2/b-print-2.2.2/cr-1.5.5/date-1.1.2/fc-4.0.2/fh-3.2.2/kt-2.6.4/r-2.2.9/rg-1.1.4/rr-1.2.8/sc-2.0.5/sb-1.3.2/sp-2.0.0/sl-1.3.4/sr-1.1.0/datatables.min.js">
-</script>
+<script src="{{ asset('js/jquery.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/datatables.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/pdfmake.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/vfs_fonts.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/select2.min.js') }}"></script>
+
 <script>
     $(function() {
         var table = $('#category-table').DataTable({
@@ -84,7 +99,7 @@ src="https://cdn.datatables.net/v/bs5/jq-3.6.0/jszip-2.5.0/dt-1.11.5/af-2.3.7/b-
             ],
             dom: 'Blfrtip',
             order: [
-                [1, "asc"]
+                [0, "asc"]
             ],
             deferRender: true,
             buttons: [{
@@ -117,11 +132,46 @@ src="https://cdn.datatables.net/v/bs5/jq-3.6.0/jszip-2.5.0/dt-1.11.5/af-2.3.7/b-
                 className: "not-export",
                 searchable: false,
                 orderable: false,
+                "targets": [5, 6]
             }, ],
 
         });
+        $("#class").select2({
+            ajax: {
+                url: "{{ route('classes.api') }}",
+                dataType: 'json',
+                data: function(params) {
+                    return {
+                        q: params.term
+                    };
+                },
+                processResults: function(data, params) {
+                    return {
+                        results: $.map(data, function(item) {
+                            return {
+                                text: item.name,
+                                id: item.id
+                            }
+                        })
+                    };
+                },
+            },
+            placeholder: 'Lọc theo chi đoàn',
+            allowClear: true
+        });
+        let data_title = $('title').data('title')
+        $("#class").change(function() {
+            let value = $(this).val();
+            (value == null) ? table.column(4).search('').draw(): table.column(4).search(value).draw();
+            let classes = $(this).children().last().text();
+            let new_title =
+                `${data_title}
+Chi đoàn lớp ${classes}`;
+            document.title = new_title;
+        })
     });
 </script>
+
 @if ($message = Session::get('success'))
     <script>
         alert('{!! $message !!}')

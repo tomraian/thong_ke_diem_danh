@@ -4,11 +4,17 @@ namespace App\Imports;
 
 use App\Models\Attendance;
 use App\Models\User;
+use Maatwebsite\Excel\Concerns\Importable;
+use Maatwebsite\Excel\Concerns\SkipsErrors;
 use Maatwebsite\Excel\Concerns\ToModel;
+use Maatwebsite\Excel\Concerns\WithBatchInserts;
+use Maatwebsite\Excel\Concerns\WithChunkReading;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
+use Throwable;
 
-class AttendancesImport implements ToModel, WithHeadingRow
+class AttendancesImport implements ToModel, WithHeadingRow, WithBatchInserts, WithChunkReading
 {
+    use Importable;
     /**
      * @param array $row
      *
@@ -22,7 +28,7 @@ class AttendancesImport implements ToModel, WithHeadingRow
         } else {
             $thu = 0;
         }
-        ini_set('memory_limit', '-1');
+        // ini_set('memory_limit', '-1');
         return new Attendance([
             'student_code' => $row['ma'],
             'date' => $row['ngay'],
@@ -33,8 +39,13 @@ class AttendancesImport implements ToModel, WithHeadingRow
             'time_4' => "0" . substr($row['4'], 5),
         ]);
     }
-    public function collection()
+    public function batchSize(): int
     {
-        return Attendance::all();
+        return 1000;
+    }
+
+    public function chunkSize(): int
+    {
+        return 1000;
     }
 }
