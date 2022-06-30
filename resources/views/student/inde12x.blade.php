@@ -13,7 +13,6 @@
         table.dataTable tbody>tr.selected td {
             background-color: #0043c8 !important;
         }
-
     </style>
 </head>
 
@@ -90,8 +89,8 @@ src="https://cdn.datatables.net/v/bs5/jq-3.6.0/jszip-2.5.0/dt-1.11.5/af-2.3.7/b-
                 },
             ],
             "lengthMenu": [
-                [10, 25, 50, 100, -1],
-                [10, 25, 50, 100, "All"]
+                [-1, 10, 25, 50, 100],
+                ["Tất cả", 10, 25, 50, 100]
             ],
             dom: 'Blfrtip',
             order: [

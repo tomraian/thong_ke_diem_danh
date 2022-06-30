@@ -78,11 +78,11 @@ class StudentController extends Controller
                     return $student->AttendanceDetails->first()->count_not_sunday;
                 }
             })
-            ->filterColumn('name', function ($query, $keyword) {
-                $query->whereHas('class', function ($q) use ($keyword) {
-                    return $q->where('name', $keyword);
-                });
-            })
+            // ->filterColumn('name', function ($query, $keyword) {
+            //     $query->whereHas('class', function ($q) use ($keyword) {
+            //         return $q->where('name', $keyword);
+            //     });
+            // })
             ->make(true);
     }
 

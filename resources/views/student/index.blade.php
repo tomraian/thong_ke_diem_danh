@@ -11,12 +11,10 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('css/bootstrap.min.css') }}" />
     <link rel="stylesheet" href="{{ asset('css/datatables.min.css') }}">
     <link href="{{ asset('css/select2.min.css') }}" rel="stylesheet" />
-
     <style>
         table.dataTable tbody>tr.selected td {
             background-color: #0043c8 !important;
         }
-
     </style>
 </head>
 
@@ -45,7 +43,7 @@
                             <th scope="col">Tên Thánh</th>
                             <th scope="col">Họ</th>
                             <th scope="col">Tên</th>
-                            <th scope="col">Lớp</th>
+                            <th scope="col">Chi đoàn</th>
                             <th scope="col">Chúa Nhật</th>
                             <th scope="col">Ngày thường</th>
                         </tr>
@@ -94,8 +92,8 @@
                 },
             ],
             "lengthMenu": [
-                [10, 25, 50, 100, -1],
-                [10, 25, 50, 100, "All"]
+                [-1, 10, 25, 50, 100],
+                ["Tất cả", 10, 25, 50, 100]
             ],
             dom: 'Blfrtip',
             order: [
@@ -159,16 +157,16 @@
             placeholder: 'Lọc theo chi đoàn',
             allowClear: true
         });
-        let data_title = $('title').data('title')
         $("#class").change(function() {
             let value = $(this).val();
-            (value == null) ? table.column(4).search('').draw(): table.column(4).search(value).draw();
-            let classes = $(this).children().last().text();
-            let new_title =
-                `${data_title}
-Chi đoàn lớp ${classes}`;
-            document.title = new_title;
+            console.log(value);
+            (value == null) ? table.column(4).search('').draw(): table.column(4).search("(^" + value +
+                    "$)", true, false)
+                .draw();
         })
+        let data_title = $('title').data('title')
+        document.title = document.title.trim();
+
     });
 </script>
 

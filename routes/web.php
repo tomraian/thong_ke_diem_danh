@@ -22,6 +22,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/lop', [ClassController::class, 'importView']);
 Route::post('/lop', [ClassController::class, 'import'])->name('classes.import');
 Route::get('/api/lop', [ClassController::class, 'api'])->name('classes.api');
+Route::get('/fillter/lop', [ClassController::class, 'fillter'])->name('classes.fillter');
 
 //  thiếu nhi 
 Route::get('/', [StudentController::class, 'index'])->name('student.index');
