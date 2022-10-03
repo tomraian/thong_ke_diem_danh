@@ -3,8 +3,7 @@
 
 <head>
     <title>Laravel 5.7 Import Export Excel to database Example - ItSolutionStuff.com</title>
-    <link rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/bootstrap.min.css') }}" />
 </head>
 
 <body>

@@ -5,6 +5,7 @@ use App\Http\Controllers\StudentController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProcessController;
 use App\Http\Controllers\ClassController;
+use App\Http\Controllers\DayRequiredController;
 use App\Models\Attendance;
 use Illuminate\Support\Facades\Route;
 
@@ -17,7 +18,11 @@ use Illuminate\Support\Facades\Route;
 | routes are loaded by the RouteServiceProvider within a group which
 | contains the "web" middleware group. Now create something great!
 |
+
 */
+
+Route::post('/ngay-bat-buoc', [DayRequiredController::class, 'store'])->name('dayrequired.store');
+
 //  lớp 
 Route::get('/lop', [ClassController::class, 'importView']);
 Route::post('/lop', [ClassController::class, 'import'])->name('classes.import');

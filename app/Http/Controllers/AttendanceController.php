@@ -51,27 +51,27 @@ class AttendanceController extends Controller
         foreach ($students as $student) {
             $i = 0;
             $CN_1 = [
-                'gio_vao' => 0.215277777777778,
+                'gio_vao' => 0.1875,
                 'gio_ra' => 0.232638888888889
             ];
             $CN_2 = [
-                'gio_vao' => 0.270833333,
+                'gio_vao' => 0.270833333333333,
                 'gio_ra' => 0.315972222
             ];
             $CN_3 = [
-                'gio_vao' => 0.645833333,
+                'gio_vao' => 0.625,
                 'gio_ra' => 0.670138889
             ];
             $CN_4 = [
-                'gio_vao' => 0.729166667,
+                'gio_vao' => 0.708333333333333,
                 'gio_ra' => 0.753472222
             ];
             $NT_1 = [
-                'gio_vao' => 0.173611111,
-                'gio_ra' => 0.190972222
+                'gio_vao' => 0.166666666666667,
+                'gio_ra' => 0.211805555555556
             ];
             $NT_2 = [
-                'gio_vao' => 0.708333333,
+                'gio_vao' => 0.6875,
                 'gio_ra' => 0.732638889,
             ];
             $time = [
@@ -180,19 +180,7 @@ class AttendanceController extends Controller
     }
     public function api()
     {
-        return Datatables::of(Attendance::query()->where('count', '>', 0)->with('student', 'student.class')->get())
-            ->addColumn('saint_name', function ($student) {
-                return $student->student->saint_name;
-            })
-            ->addColumn('first_name', function ($student) {
-                return $student->student->first_name;
-            })
-            ->addColumn('last_name', function ($student) {
-                return $student->student->last_name;
-            })
-            ->addColumn('class', function ($student) {
-                return $student->student->class->name;
-            })
+        return Datatables::of(Attendance::query()->with('student', 'student.class:id,name')->get())
             ->editColumn('is_sunday', function ($student) {
                 if ($student->is_sunday == 1) {
                     return 'Chúa Nhật';
@@ -214,6 +202,8 @@ class AttendanceController extends Controller
             ->editColumn('time_4', function ($student) {
                 return Helper::correctDateTime($student->time_4)['time'];
             })
+            ->removeColumn('created_at')
+            ->removeColumn('updated_at')
             ->make(true);
     }
     /**

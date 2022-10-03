@@ -12,6 +12,7 @@ use Maatwebsite\Excel\Facades\Excel;
 use Yajra\Datatables\Datatables;
 use App\Helper\Helper;
 use App\Models\Classes;
+use App\Models\DayRequired;
 
 class StudentController extends Controller
 {
@@ -22,9 +23,10 @@ class StudentController extends Controller
      */
     public function index()
     {
+        $dayRequired = DayRequired::query()->latest('id')->first();
         $start_date = Helper::correctDateTime(Attendance::min('date'))['date'];
         $end_date = Helper::correctDateTime(Attendance::max('date'))['date'];
-        return view('student.index', compact('start_date', 'end_date'));
+        return view('student.index', compact('start_date', 'end_date', 'dayRequired'));
     }
     public function count()
     {
@@ -58,25 +60,47 @@ class StudentController extends Controller
     }
     public function api()
     {
+        function dataAttendance($student, $day)
+        {
+            $data = $student->AttendanceDetails->first();
+            if ($data == '' || $data == 'null') {
+                return 0;
+            } else {
+                return $data->$day;
+            }
+        }
+        $dayRequired = DayRequired::query()->latest('id')->first();
         return Datatables::of(Student::query()->with('class', 'AttendanceDetails'))
             ->editColumn('class_id', function ($student) {
                 return $student->class->name;
             })
-            ->addColumn('count_sunday', function ($student) {
-                // return $student->AttendanceDetails;
-                if ($student->AttendanceDetails->first() == '') {
-                    return 0;
-                } else {
-                    return $student->AttendanceDetails->first()->count_sunday;
+            ->editColumn('code', function ($student) {
+                if (strlen($student->code) == 3) {
+                    return "0" . $student->code;
                 }
+                return  $student->code;
+            })
+            ->addColumn('count_sunday', function ($student) {
+                return dataAttendance($student, 'count_sunday');
             })
             ->addColumn('count_not_sunday', function ($student) {
-                // return $student;
-                if ($student->AttendanceDetails->first() == 'null' || $student->AttendanceDetails->first() == '') {
+                return dataAttendance($student, 'count_not_sunday');
+            })
+            ->addColumn('off_sunday', function ($student) use ($dayRequired) {
+                $count_sunday = dataAttendance($student, 'count_sunday');
+                $sunday_required = $dayRequired->sunday_required;
+                if (($sunday_required - $count_sunday) <= -1) {
                     return 0;
-                } else {
-                    return $student->AttendanceDetails->first()->count_not_sunday;
                 }
+                return  $sunday_required - $count_sunday;
+            })
+            ->addColumn('off_not_sunday', function ($student) use ($dayRequired) {
+                $count_not_sunday = dataAttendance($student, 'count_not_sunday');
+                $not_sunday_required = $dayRequired->not_sunday_required;
+                if (($not_sunday_required - $count_not_sunday) <= -1) {
+                    return 0;
+                }
+                return $not_sunday_required - $count_not_sunday;
             })
             // ->filterColumn('name', function ($query, $keyword) {
             //     $query->whereHas('class', function ($q) use ($keyword) {

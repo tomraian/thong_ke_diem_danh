@@ -13,7 +13,6 @@
         table.dataTable tbody>tr.selected td {
             background-color: #0043c8 !important;
         }
-
     </style>
 </head>
 
@@ -23,10 +22,6 @@
         <table class="table text-center" id="category-table" width="100%" border="1">
             <thead class="thead-dark">
                 <tr>
-                    {{-- <th scope="col">
-                        <label for="checkAll">Chọn tất cả</label>
-                        <input type="checkbox" name="" id="checkAll">
-                    </th> --}}
                     <th scope="col ">Mã số</th>
                     <th scope="col ">Tên thánh</th>
                     <th scope="col ">Họ</th>
@@ -68,7 +63,7 @@
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
 <script type="text/javascript"
-src="https://cdn.datatables.net/v/bs5/jq-3.6.0/jszip-2.5.0/dt-1.11.5/af-2.3.7/b-2.2.2/b-colvis-2.2.2/b-html5-2.2.2/b-print-2.2.2/cr-1.5.5/date-1.1.2/fc-4.0.2/fh-3.2.2/kt-2.6.4/r-2.2.9/rg-1.1.4/rr-1.2.8/sc-2.0.5/sb-1.3.2/sp-2.0.0/sl-1.3.4/sr-1.1.0/datatables.min.js">
+    src="https://cdn.datatables.net/v/bs5/jq-3.6.0/jszip-2.5.0/dt-1.11.5/af-2.3.7/b-2.2.2/b-colvis-2.2.2/b-html5-2.2.2/b-print-2.2.2/cr-1.5.5/date-1.1.2/fc-4.0.2/fh-3.2.2/kt-2.6.4/r-2.2.9/rg-1.1.4/rr-1.2.8/sc-2.0.5/sb-1.3.2/sp-2.0.0/sl-1.3.4/sr-1.1.0/datatables.min.js">
 </script>
 <script>
     $(function() {
@@ -82,16 +77,16 @@ src="https://cdn.datatables.net/v/bs5/jq-3.6.0/jszip-2.5.0/dt-1.11.5/af-2.3.7/b-
                     data: 'student_code',
                 },
                 {
-                    data: 'saint_name',
+                    data: 'student.saint_name',
                 },
                 {
-                    data: 'first_name',
+                    data: 'student.first_name',
                 },
                 {
-                    data: 'last_name',
+                    data: 'student.last_name',
                 },
                 {
-                    data: 'class',
+                    data: 'student.class.name',
                 },
                 {
                     data: 'date',
@@ -122,7 +117,7 @@ src="https://cdn.datatables.net/v/bs5/jq-3.6.0/jszip-2.5.0/dt-1.11.5/af-2.3.7/b-
             ],
             dom: 'Blfrtip',
             order: [
-                [1, "asc"]
+                [0, "asc"]
             ],
             deferRender: true,
             buttons: [{
