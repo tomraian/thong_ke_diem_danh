@@ -20,5 +20,10 @@
                 <a class="nav-link" href="{{ route('attendance.index') }}">Thống kê điểm danh</a>
             </li>
         </ul>
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('student.list') }}">Danh sách</a>
+            </li>
+        </ul>
     </div>
 </nav>

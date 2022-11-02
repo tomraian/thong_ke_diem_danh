@@ -109,10 +109,32 @@ class StudentController extends Controller
             // })
             ->make(true);
     }
+    public function listApi()
+    {
+        return Datatables::of(Student::query()->with('class'))
+            ->editColumn('class_id', function ($student) {
+                return $student->class->name;
+            })
+            ->editColumn('code', function ($student) {
+                if (strlen($student->code) == 3) {
+                    return "0" . $student->code;
+                }
+                return  $student->code;
+            })
+            ->make(true);
+    }
 
-    /**
-     * @return \Illuminate\Support\Collection
-     */
+    public function list()
+    {
+        return view('student.list');
+    }
+
+    public function update(Request $request)
+    {
+        dd($request->all());
+        return view('student.list');
+    }
+
     public function importView()
     {
         return view('student.import');

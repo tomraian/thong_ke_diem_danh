@@ -35,6 +35,11 @@ Route::get('/api', [StudentController::class, 'api'])->name('student.api');
 Route::get('/thieu-nhi', [StudentController::class, 'importView']);
 Route::post('/thieu-nhi', [StudentController::class, 'import'])->name('student.import');
 
+Route::get('/danh-sach', [StudentController::class, 'list'])->name('student.list');
+Route::get('/danh-sach/api', [StudentController::class, 'listApi'])->name('student.listApi');
+
+Route::post('/sua/{student_id?}', [StudentController::class, 'update'])->name('student.update');
+
 // điểm danh 
 
 Route::get('/diem-danh', [AttendanceController::class, 'importView']);
