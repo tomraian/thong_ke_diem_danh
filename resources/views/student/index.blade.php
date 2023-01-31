@@ -20,23 +20,20 @@
             min-width: 200px;
         }
 
-        .not-select {
-            /* user-select: none; */
-            /* pointer-events: none; */
-        }
 
-        .select-menu {
+
+        /* .select-menu {
             position: absolute;
             width: 200%;
             z-index: 99999;
             display: none;
             top: 50px;
             box-shadow: 5px 5px 20px black;
-        }
+        } */
 
-        .none-select-btn {
+        /* .none-select-btn {
             position: relative;
-        }
+        } */
     </style>
 </head>
 
@@ -109,53 +106,42 @@
     $(function() {
         var table = $('#category-table').DataTable({
             fnInitComplete: function(oSettings, json) {
-                //             $('.none-select-btn').append(`
-                //     <div class="select-menu" role="menu"><a class="dt-button dropdown-item buttons-columnVisibility active"
-                //             tabindex="0" aria-controls="category-table" href="#" data-cv-idx="0"><span>Mã số</span></a> <a
-                //             class="dt-button dropdown-item buttons-columnVisibility active" tabindex="0"
-                //             aria-controls="category-table" href="#" data-cv-idx="1"><span>Tên Thánh</span></a> <a
-                //             class="dt-button dropdown-item buttons-columnVisibility active" tabindex="0"
-                //             aria-controls="category-table" href="#" data-cv-idx="2"><span>Họ</span></a> <a
-                //             class="dt-button dropdown-item buttons-columnVisibility active" tabindex="0"
-                //             aria-controls="category-table" href="#" data-cv-idx="3"><span>Tên</span></a> <a
-                //             class="dt-button dropdown-item buttons-columnVisibility active" tabindex="0"
-                //             aria-controls="category-table" href="#" data-cv-idx="4"><span>Chi đoàn</span></a> <a
-                //             class="dt-button dropdown-item buttons-columnVisibility active" tabindex="0"
-                //             aria-controls="category-table" href="#" data-cv-idx="5"><span>Đi Lễ Chúa Nhật</span></a> <a
-                //             class="dt-button dropdown-item buttons-columnVisibility active" tabindex="0"
-                //             aria-controls="category-table" href="#" data-cv-idx="6"><span>Vắng Lễ Chúa Nhật</span></a> <a
-                //             class="dt-button dropdown-item buttons-columnVisibility active" tabindex="0"
-                //             aria-controls="category-table" href="#" data-cv-idx="7"><span>Đi Lễ thường</span></a> <a
-                //             class="dt-button dropdown-item buttons-columnVisibility active" tabindex="0"
-                //             aria-controls="category-table" href="#" data-cv-idx="8"><span>Vắng Lễ thường</span></a> </div>
-                // `);
-                $('.none-select-btn').click(function(e) {
-
-                });
+                // $.each($('.none-select'), function(k, v) {
+                //     $(v).bind('copy paste', function(e) {
+                //         // e.preventDefault();
+                //         return false;
+                //     });
+                // });
+                // $('.none-select').attr("oncopy", "return false");
+                // $('.none-select').attr("onDrag", "return false");
+                // $('.none-select').attr("onDrop", "return false");
+                // $('.none-select').attr("onmousedown", "return false");
+                // $('.none-select').attr("onselectstart", "return false");
+                // $('.none-select').attr("unselectable", "on");
             },
             processing: true,
             select: true,
             serverSide: true,
             ajax: '{!! route('student.api') !!}',
             columns: [{
+                    className: "none-select",
                     data: 'code',
-                    className: 'not-select',
                 },
                 {
+                    className: "none-select",
                     data: 'saint_name',
-                    className: 'not-select',
                 },
                 {
+                    className: "none-select",
                     data: 'first_name',
-                    className: 'not-select',
                 },
                 {
+                    className: "none-select",
                     data: 'last_name',
-                    className: 'not-select',
                 },
                 {
+                    className: "none-select",
                     data: 'class_id',
-                    className: 'not-select',
                 },
                 {
                     data: 'count_sunday',
@@ -229,13 +215,13 @@
                     extend: 'colvis',
                     text: 'Ẩn cột',
                 },
-                {
-                    text: 'Bỏ chọn cột thông tin',
-                    className: 'none-select-btn',
-                    // action: function(e, dt, node, config) {
-                    //     alert('Button activated');
-                    // }
-                },
+                // {
+                //     text: 'Bỏ chọn cột thông tin',
+                //     className: 'none-select-btn',
+                //     action: function(e, dt, node, config) {
+                //         alert('Button activated');
+                //     }
+                // },
             ],
             columnDefs: [{
                 className: "not-export",
