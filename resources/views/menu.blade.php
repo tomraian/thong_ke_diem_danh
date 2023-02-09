@@ -16,9 +16,9 @@
             <li class="nav-item">
                 <a class="nav-link" href="{{ route('attendance.import') }}">Nhập thông tin điểm danh</a>
             </li>
-            <li class="nav-item">
+            {{-- <li class="nav-item">
                 <a class="nav-link" href="{{ route('attendance.index') }}">Thống kê điểm danh</a>
-            </li>
+            </li> --}}
         </ul>
         <ul class="navbar-nav mr-auto">
             <li class="nav-item">

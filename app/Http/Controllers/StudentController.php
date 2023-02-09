@@ -131,7 +131,7 @@ class StudentController extends Controller
 
     public function update(Request $request)
     {
-        dd($request->all());
+        // dd($request->all());
         return view('student.list');
     }
 
@@ -141,9 +141,16 @@ class StudentController extends Controller
     }
     public function import(Request $request)
     {
-        Excel::import(new StudentsImport, $request->file);
-
-        return redirect()->route('student.index')->with('success', 'Thêm thiếu nhi thành công rồi đó!!!');
+        // Excel::import(new StudentsImport, $request->file);
+        $file = $request->file;
+        $import = new StudentsImport();
+        $import->import($file);
+        dd($import);
+        // // dd($failures->row(),$failures->attribute(),$failures->errors(),$failures->values());
+        if($import->failures()->isNotEmpty()){
+            dd($import->failures()[0]);
+        }
+        return redirect()->route('student.importView')->with('success', 'Thêm thiếu nhi thành công rồi đó!!!');
     }
 
     public function truncate()

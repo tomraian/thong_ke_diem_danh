@@ -12,9 +12,39 @@ class ClassController extends Controller
     /**
      * @return \Illuminate\Support\Collection
      */
-    public function importView()
+    public function importView(Request $request)
     {
-        return view('classes.import');
+        $orderBy = "";
+        $count = Classes::query()->where('status',0)->count();
+        if($request->orderby == null){
+            $orderBy = "status";
+        }
+        else{
+            $orderBy = $request->orderby;
+        }
+        $classes = Classes::query()->orderBy($orderBy, 'asc')->get();
+        return view('classes.import', compact('classes','count'));
+    }
+    public function store(Request $request)
+    {
+        $validated = $request->validate([
+            'name' => 'required|unique:classes',
+        ]);
+        $class = new Classes();
+        $class->fill($request->all());
+        $class->save();
+        return redirect()->back()->with('success', 'Thêm thành công');
+    }
+    public function status(Request $request,Classes $classes)
+    {
+        if($classes->status == 0){
+            $classes->status = 1;
+        }
+        else{
+            $classes->status = 0;
+        }
+        $classes->save();
+        return redirect()->back();
     }
 
     /**
@@ -30,6 +60,7 @@ class ClassController extends Controller
     {
         return Classes::query()
             ->where('name', 'like', '%' . $request->get('q') . '%')
+            ->Where('status', 0)
             ->get([
                 'id',
                 'name',

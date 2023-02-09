@@ -11,9 +11,9 @@ class Student extends Model
     use HasFactory;
     protected $fillable = [
         'code',
-        'saint_name',
-        'first_name',
-        'last_name',
+        'tenthanh',
+        'ho',
+        'ten',
         'class_id',
     ];
     public function class()

@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>Laravel 5.7 Import Export Excel to database Example - ItSolutionStuff.com</title>
+    <title>Quản lý thiếu nhi</title>
     <link rel="stylesheet" type="text/css" href="{{ asset('css/bootstrap.min.css') }}" />
 </head>
 
@@ -10,6 +10,15 @@
     @include('menu')
 
     <div class="container">
+        @if ($errors->any())
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
         <div class="card bg-light mt-3">
             <div class="card-header">
                 Thêm thiếu nhi
@@ -24,7 +33,11 @@
             </div>
         </div>
     </div>
-
+    @if ($message = Session::get('success'))
+        <script>
+            alert('{!! $message !!}')
+        </script>
+    @endif
 </body>
 
 </html>

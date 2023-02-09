@@ -129,15 +129,15 @@
                 },
                 {
                     className: "none-select",
-                    data: 'saint_name',
+                    data: 'tenthanh',
                 },
                 {
                     className: "none-select",
-                    data: 'first_name',
+                    data: 'ho',
                 },
                 {
                     className: "none-select",
-                    data: 'last_name',
+                    data: 'ten',
                 },
                 {
                     className: "none-select",
@@ -265,11 +265,7 @@
     });
 </script>
 
-@if ($message = Session::get('success'))
-    <script>
-        alert('{!! $message !!}')
-    </script>
-@endif
+
 </body>
 
 </html>

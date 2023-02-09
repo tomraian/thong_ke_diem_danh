@@ -24,15 +24,17 @@ use Illuminate\Support\Facades\Route;
 Route::post('/ngay-bat-buoc', [DayRequiredController::class, 'store'])->name('dayrequired.store');
 
 //  lớp 
-Route::get('/lop', [ClassController::class, 'importView']);
+Route::get('/lop', [ClassController::class, 'importView'])->name('classes.importView');;
 Route::post('/lop', [ClassController::class, 'import'])->name('classes.import');
+Route::post('/lop/them', [ClassController::class, 'store'])->name('classes.store');
+Route::post('/lop/cap-nhap-trang-thai-lop/{classes}', [ClassController::class, 'status'])->name('classes.status');
 Route::get('/api/lop', [ClassController::class, 'api'])->name('classes.api');
 Route::get('/fillter/lop', [ClassController::class, 'fillter'])->name('classes.fillter');
 
 //  thiếu nhi 
 Route::get('/', [StudentController::class, 'index'])->name('student.index');
 Route::get('/api', [StudentController::class, 'api'])->name('student.api');
-Route::get('/thieu-nhi', [StudentController::class, 'importView']);
+Route::get('/thieu-nhi', [StudentController::class, 'importView'])->name('student.importView');
 Route::post('/thieu-nhi', [StudentController::class, 'import'])->name('student.import');
 
 Route::get('/danh-sach', [StudentController::class, 'list'])->name('student.list');
