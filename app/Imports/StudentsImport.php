@@ -25,15 +25,14 @@ class StudentsImport implements ToModel, WithHeadingRow,WithValidation,SkipsOnFa
 
     public function model(array $row)
     {
-        // $class = Classes::query()->where('name',$row['class_id'])->get()[0]->id;
-        // dd( $row['code']);
+            // dd(Classes::query()->where('name',"zxcxzc")->get()->count());
         return new Student([
             'code'        =>  $row['code'],
             'tenthanh'    =>  $row['tenthanh'],
             'ho'          =>  $row['ho'],
             'ten'         =>  $row['ten'],
             // 'class_id'      => $row['class_id'],
-            'class_id'    => Classes::query()->where('name',$row['class_id'])->get()[0]->id,
+            'class_id'    =>  ($row['class_id'] == NULL || Classes::query()->where('name',$row['class_id'])->get()->count() == 0) ? Classes::query()->where('name',"----")->get()[0]->id : Classes::query()->where('name',$row['class_id'])->get()[0]->id,
         ]);
     }
     public function collection()
@@ -46,7 +45,7 @@ class StudentsImport implements ToModel, WithHeadingRow,WithValidation,SkipsOnFa
             '*.code' => ['required','unique:students,code'],
             '*.ho' => ['required'],
             '*.ten' => ['required'],
-            '*.class_id' => ['required'],
+            // '*.class_id' => ['required'],
         ];
     }
 }

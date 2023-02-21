@@ -23,6 +23,6 @@ class UserController extends Controller
     {
         Excel::import(new UsersImport, $request->file);
 
-        return 'oke ne';
+        return 'Import ';
     }
 }

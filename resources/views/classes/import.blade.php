@@ -30,7 +30,7 @@
     <div class="container">
         <div class="card bg-light mt-3">
             <div class="card-header">
-                Thêm lớp
+                Thêm lớp - Tải file mẫu <a href="{{ asset('file/ThemLop.xlsx') }}" download="ThemLop.xlsx">Download</a>
             </div>
             <div class="card-body">
                 <form action="{{ route('classes.import') }}" method="POST" enctype="multipart/form-data">
@@ -59,9 +59,9 @@
     </div>
     <div class="container">
         <div class="card bg-light mt-3">
-            <div class="card-header">
-                Danh sách các lớp - Có {{ $count }} lớp đang mở
-                <span style="float: right">
+            <div class="card-header d-flex align-items-center justify-content-between">
+                <span>Danh sách các lớp - Có {{ $count }} lớp đang mở</span>
+                <span >
                     <select name="" id="orderby">
                         <option value="status" @if (Request::get('orderby') == 'status') selected @endif>Sắp xếp theo lớp đang
                             mở</option>
@@ -69,7 +69,10 @@
                         </option>
                     </select>
                 </span>
-
+                <form action="{{ route('classes.truncate') }}" method="post">
+                    @csrf
+                    <button type="submit" class="btn btn-primary">Xóa tất cả lớp</button>
+                </form>
             </div>
             <div class="card-body">
                 <table border="1" width="100%" style="text-align: center;">
@@ -77,7 +80,8 @@
                         <td>Mã lớp</td>
                         <td>Tên lớp</td>
                         <td>Trạng thái</td>
-                        <td>Hành động</td>
+                        <td>Đóng/mở lớp</td>
+                        <td>Xóa lớp</td>
                     </tr>
                     @foreach ($classes as $class)
                         <tr>
@@ -99,6 +103,12 @@
                                     @else
                                         <button class="btn btn-danger">Đóng lớp</button>
                                     @endif
+                                </form>
+                            </td>
+                            <td>
+                                <form action="{{ route('classes.destroy',$class->id) }}" method="post">
+                                    @csrf
+                                    <button class="btn btn-primary">Xóa lớp</button>
                                 </form>
                             </td>
                         </tr>

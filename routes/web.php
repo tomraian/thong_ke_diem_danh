@@ -28,14 +28,16 @@ Route::get('/lop', [ClassController::class, 'importView'])->name('classes.import
 Route::post('/lop', [ClassController::class, 'import'])->name('classes.import');
 Route::post('/lop/them', [ClassController::class, 'store'])->name('classes.store');
 Route::post('/lop/cap-nhap-trang-thai-lop/{classes}', [ClassController::class, 'status'])->name('classes.status');
-Route::get('/api/lop', [ClassController::class, 'api'])->name('classes.api');
-Route::get('/fillter/lop', [ClassController::class, 'fillter'])->name('classes.fillter');
+Route::post('/lop/xoa/{classes}', [ClassController::class, 'destroy'])->name('classes.destroy');
+Route::get('/lop/api', [ClassController::class, 'api'])->name('classes.api');
+Route::post('/lop/truncate', [ClassController::class, 'truncate'])->name('classes.truncate');
 
 //  thiếu nhi 
 Route::get('/', [StudentController::class, 'index'])->name('student.index');
 Route::get('/api', [StudentController::class, 'api'])->name('student.api');
 Route::get('/thieu-nhi', [StudentController::class, 'importView'])->name('student.importView');
 Route::post('/thieu-nhi', [StudentController::class, 'import'])->name('student.import');
+Route::post('/thieu-nhi/truncate', [StudentController::class, 'truncate'])->name('student.truncate');
 
 Route::get('/danh-sach', [StudentController::class, 'list'])->name('student.list');
 Route::get('/danh-sach/api', [StudentController::class, 'listApi'])->name('student.listApi');
@@ -54,11 +56,9 @@ Route::get('/thong-ke', [AttendanceController::class, 'index'])->name('attendanc
 
 
 Route::get('/thong-ke/api', [AttendanceController::class, 'api'])->name('attendance.api');
-
-
+Route::post('/diem-danh/truncate', [AttendanceController::class, 'truncate'])->name('attendance.truncate');
 
 Route::get('/calculate', [StudentController::class, 'count'])->name('student.calculate');
 
 
 
-Route::post('/truncate', [StudentController::class, 'truncate'])->name('student.truncate');

@@ -145,18 +145,18 @@ class StudentController extends Controller
         $file = $request->file;
         $import = new StudentsImport();
         $import->import($file);
-        dd($import);
+        // dd($import);
         // // dd($failures->row(),$failures->attribute(),$failures->errors(),$failures->values());
         if($import->failures()->isNotEmpty()){
             dd($import->failures()[0]);
         }
-        return redirect()->route('student.importView')->with('success', 'Thêm thiếu nhi thành công rồi đó!!!');
+        return redirect()->route('student.importView')->with('success', 'Thêm thiếu nhi thành công rồi!!!!');
     }
 
     public function truncate()
     {
-        AttendanceDetail::query()->truncate();
-        Attendance::query()->truncate();
-        return redirect()->route('student.index')->with('success', 'xóa được rồi nè');
+        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+        Student::query()->truncate();
+        return redirect()->route('student.importView')->with('success', 'Xóa danh sách thiếu nhi thành công!!!!');
     }
 }

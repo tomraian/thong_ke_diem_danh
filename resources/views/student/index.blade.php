@@ -63,7 +63,7 @@
         </div>
         <div class="row justify-content-center align-items-center">
             <div class="col-6">
-                <form action="{{ route('student.truncate') }}" method="post">
+                <form action="{{ route('attendance.truncate') }}" method="post">
                     @csrf
                     <button class="btn badge-success m-3">Xóa dữ liệu điểm danh</button>
                 </form>

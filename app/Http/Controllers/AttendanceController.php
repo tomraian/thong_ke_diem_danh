@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Attendance;
+use App\Models\AttendanceDetail;
 use App\Models\Student;
 use App\Http\Requests\StoreAttendanceRequest;
 use App\Http\Requests\UpdateAttendanceRequest;
@@ -50,28 +51,28 @@ class AttendanceController extends Controller
         $students = Attendance::all();
         foreach ($students as $student) {
             $i = 0;
-            $CN_1 = [
-                'gio_vao' => 0.1875,
-                'gio_ra' => 0.232638888888889
-            ];
+            // $CN_1 = [
+            //     'gio_vao' => 0.1875,
+            //     'gio_ra' => 0.232638888888889
+            // ];
             $CN_2 = [
                 'gio_vao' => 0.270833333333333,
                 'gio_ra' => 0.315972222
             ];
-            $CN_3 = [
-                'gio_vao' => 0.625,
-                'gio_ra' => 0.670138889
-            ];
-            $CN_4 = [
-                'gio_vao' => 0.708333333333333,
-                'gio_ra' => 0.753472222
-            ];
-            $NT_1 = [
-                'gio_vao' => 0.166666666666667,
-                'gio_ra' => 0.211805555555556
-            ];
+            // $CN_3 = [
+            //     'gio_vao' => 0.625,
+            //     'gio_ra' => 0.670138889
+            // ];
+            // $CN_4 = [
+            //     'gio_vao' => 0.708333333333333,
+            //     'gio_ra' => 0.753472222
+            // ];
+            // $NT_1 = [
+            //     'gio_vao' => 0.166666666666667,
+            //     'gio_ra' => 0.211805555555556
+            // ];
             $NT_2 = [
-                'gio_vao' => 0.6875,
+                'gio_vao' => 0.697916666666667,
                 'gio_ra' => 0.732638889,
             ];
             $time = [
@@ -80,27 +81,27 @@ class AttendanceController extends Controller
                 'time_3' => $student->time_3,
                 'time_4' => $student->time_4,
             ];
-            $CN_1 = array_merge($CN_1, $time);
+            // $CN_1 = array_merge($CN_1, $time);
             $CN_2 = array_merge($CN_2, $time);
-            $CN_3 = array_merge($CN_3, $time);
-            $CN_4 = array_merge($CN_4, $time);
-            $NT_1 = array_merge($NT_1, $time);
+            // $CN_3 = array_merge($CN_3, $time);
+            // $CN_4 = array_merge($CN_4, $time);
+            // $NT_1 = array_merge($NT_1, $time);
             $NT_2 = array_merge($NT_2, $time);
             if ($student->is_sunday == 1) {
-                switch ($CN_1) {
-                    case ($CN_1['time_1'] >= $CN_1['gio_vao'] && $CN_1['time_1'] <= $CN_1['gio_ra']):
-                        $i = $i + 1;
-                        break;
-                    case $CN_1['time_2'] >= $CN_1['gio_vao'] && $CN_1['time_2'] <= $CN_1['gio_ra']:
-                        $i = $i + 1;
-                        break;
-                    case $CN_1['time_3'] >= $CN_1['gio_vao'] && $CN_1['time_3'] <= $CN_1['gio_ra']:
-                        $i = $i + 1;
-                        break;
-                    case $CN_1['time_4'] >= $CN_1['gio_vao'] && $CN_1['time_4'] <= $CN_1['gio_ra']:
-                        $i = $i + 1;
-                        break;
-                }
+                // switch ($CN_1) {
+                //     case ($CN_1['time_1'] >= $CN_1['gio_vao'] && $CN_1['time_1'] <= $CN_1['gio_ra']):
+                //         $i = $i + 1;
+                //         break;
+                //     case $CN_1['time_2'] >= $CN_1['gio_vao'] && $CN_1['time_2'] <= $CN_1['gio_ra']:
+                //         $i = $i + 1;
+                //         break;
+                //     case $CN_1['time_3'] >= $CN_1['gio_vao'] && $CN_1['time_3'] <= $CN_1['gio_ra']:
+                //         $i = $i + 1;
+                //         break;
+                //     case $CN_1['time_4'] >= $CN_1['gio_vao'] && $CN_1['time_4'] <= $CN_1['gio_ra']:
+                //         $i = $i + 1;
+                //         break;
+                // }
                 switch ($CN_2) {
                     case $CN_2['time_1'] >= $CN_2['gio_vao'] && $CN_2['time_1'] <= $CN_2['gio_ra']:
                         $i = $i + 1;
@@ -115,49 +116,49 @@ class AttendanceController extends Controller
                         $i = $i + 1;
                         break;
                 }
-                switch ($CN_3) {
-                    case $CN_3['time_1'] >= $CN_3['gio_vao'] && $CN_3['time_1'] <= $CN_3['gio_ra']:
-                        $i = $i + 1;
-                        break;
-                    case $CN_3['time_2'] >= $CN_3['gio_vao'] && $CN_3['time_2'] <= $CN_3['gio_ra']:
-                        $i = $i + 1;
-                        break;
-                    case $CN_3['time_3'] >= $CN_3['gio_vao'] && $CN_3['time_3'] <= $CN_3['gio_ra']:
-                        $i = $i + 1;
-                        break;
-                    case $CN_3['time_4'] >= $CN_3['gio_vao'] && $CN_3['time_4'] <= $CN_3['gio_ra']:
-                        $i = $i + 1;
-                        break;
-                }
-                switch ($CN_4) {
-                    case $CN_4['time_1'] >= $CN_4['gio_vao'] && $CN_4['time_1'] <= $CN_4['gio_ra']:
-                        $i = $i + 1;
-                        break;
-                    case $CN_4['time_2'] >= $CN_4['gio_vao'] && $CN_4['time_2'] <= $CN_4['gio_ra']:
-                        $i = $i + 1;
-                        break;
-                    case $CN_4['time_3'] >= $CN_4['gio_vao'] && $CN_4['time_3'] <= $CN_4['gio_ra']:
-                        $i = $i + 1;
-                        break;
-                    case $CN_4['time_4'] >= $CN_4['gio_vao'] && $CN_4['time_4'] <= $CN_4['gio_ra']:
-                        $i = $i + 1;
-                        break;
-                }
+                // switch ($CN_3) {
+                //     case $CN_3['time_1'] >= $CN_3['gio_vao'] && $CN_3['time_1'] <= $CN_3['gio_ra']:
+                //         $i = $i + 1;
+                //         break;
+                //     case $CN_3['time_2'] >= $CN_3['gio_vao'] && $CN_3['time_2'] <= $CN_3['gio_ra']:
+                //         $i = $i + 1;
+                //         break;
+                //     case $CN_3['time_3'] >= $CN_3['gio_vao'] && $CN_3['time_3'] <= $CN_3['gio_ra']:
+                //         $i = $i + 1;
+                //         break;
+                //     case $CN_3['time_4'] >= $CN_3['gio_vao'] && $CN_3['time_4'] <= $CN_3['gio_ra']:
+                //         $i = $i + 1;
+                //         break;
+                // }
+                // switch ($CN_4) {
+                //     case $CN_4['time_1'] >= $CN_4['gio_vao'] && $CN_4['time_1'] <= $CN_4['gio_ra']:
+                //         $i = $i + 1;
+                //         break;
+                //     case $CN_4['time_2'] >= $CN_4['gio_vao'] && $CN_4['time_2'] <= $CN_4['gio_ra']:
+                //         $i = $i + 1;
+                //         break;
+                //     case $CN_4['time_3'] >= $CN_4['gio_vao'] && $CN_4['time_3'] <= $CN_4['gio_ra']:
+                //         $i = $i + 1;
+                //         break;
+                //     case $CN_4['time_4'] >= $CN_4['gio_vao'] && $CN_4['time_4'] <= $CN_4['gio_ra']:
+                //         $i = $i + 1;
+                //         break;
+                // }
             } else {
-                switch ($NT_1) {
-                    case ($NT_1['time_1'] >= $NT_1['gio_vao'] && $NT_1['time_1'] <= $NT_1['gio_ra']):
-                        $i = $i + 1;
-                        break;
-                    case $NT_1['time_2'] >= $NT_1['gio_vao'] && $NT_1['time_2'] <= $NT_1['gio_ra']:
-                        $i = $i + 1;
-                        break;
-                    case $NT_1['time_3'] >= $NT_1['gio_vao'] && $NT_1['time_3'] <= $NT_1['gio_ra']:
-                        $i = $i + 1;
-                        break;
-                    case $NT_1['time_4'] >= $NT_1['gio_vao'] && $NT_1['time_4'] <= $NT_1['gio_ra']:
-                        $i = $i + 1;
-                        break;
-                }
+                // switch ($NT_1) {
+                //     case ($NT_1['time_1'] >= $NT_1['gio_vao'] && $NT_1['time_1'] <= $NT_1['gio_ra']):
+                //         $i = $i + 1;
+                //         break;
+                //     case $NT_1['time_2'] >= $NT_1['gio_vao'] && $NT_1['time_2'] <= $NT_1['gio_ra']:
+                //         $i = $i + 1;
+                //         break;
+                //     case $NT_1['time_3'] >= $NT_1['gio_vao'] && $NT_1['time_3'] <= $NT_1['gio_ra']:
+                //         $i = $i + 1;
+                //         break;
+                //     case $NT_1['time_4'] >= $NT_1['gio_vao'] && $NT_1['time_4'] <= $NT_1['gio_ra']:
+                //         $i = $i + 1;
+                //         break;
+                // }
                 switch ($NT_2) {
                     case ($NT_2['time_1'] >= $NT_2['gio_vao'] && $NT_2['time_1'] <= $NT_2['gio_ra']):
                         $i = $i + 1;
@@ -286,5 +287,11 @@ class AttendanceController extends Controller
         $AttendancesImport = new AttendancesImport;
         $AttendancesImport->import($file);
         return redirect()->route('attendance.process');
+    }
+    public function truncate()
+    {
+        AttendanceDetail::query()->truncate();
+        Attendance::query()->truncate();
+        return redirect()->back()->with('success', 'Xóa dữ liệu điểm danh thành công!!!!');
     }
 }

@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Imports\ClassesImport;
 use App\Models\Classes;
 use Maatwebsite\Excel\Facades\Excel;
-
+use DB;
 class ClassController extends Controller
 {
     /**
@@ -54,7 +54,7 @@ class ClassController extends Controller
     {
         Excel::import(new ClassesImport, $request->file);
 
-        return back()->with('success', 'Thêm lớp học thành công rồi đó!!!');
+        return back()->with('success', 'Thêm lớp học thành công rồi !!!');
     }
     public function api(Request $request)
     {
@@ -65,5 +65,16 @@ class ClassController extends Controller
                 'id',
                 'name',
             ]);
+    }
+    public function destroy(Classes $classes)
+    {
+        $classes->delete();
+        return back()->with('success', "Xóa lớp $classes->name thành công rồi !!!");
+    }
+    public function truncate()
+    {
+        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+        Classes::query()->truncate();
+        return redirect()->route('classes.importView')->with('success', 'Xóa tất cả các lớp thành công!!!!');
     }
 }
